@@ -21,11 +21,16 @@ function App() {
   }, [progress]); // Include progress in the dependency array
 
   function handleStart() {
-    if (progress < 100) {
+    if (timer.current == null && progress < 100) {
       timer.current = setInterval(() => {
         setProgress((prev) => prev + 1);
       }, 100);
     }
+  }
+
+  function handleStop() {
+    clearInterval(timer.current);
+    timer.current = null;
   }
 
   return (
@@ -37,13 +42,7 @@ function App() {
 
       {/* progress bar control using start stop  */}
       <button onClick={handleStart}>start</button>
-      <button
-        onClick={(e) => {
-          clearInterval(timer.current);
-        }}
-      >
-        stop
-      </button>
+      <button onClick={handleStop}>stop</button>
     </div>
   );
 }
